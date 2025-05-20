@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Flex & Grid Training</title>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Navbar: Flexbox for horizontal layout -->
+  <nav class="bg-white shadow px-6 py-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <!-- Logo -->
+      <a href="#" class="text-2xl font-bold text-teal-600">MySite</a>
+      <!-- Nav Links (hidden on mobile) -->
+      <ul class="hidden md:flex space-x-8">
+        <li><a href="#" class="hover:text-teal-500">Home</a></li>
+        <li><a href="#features" class="hover:text-teal-500">Features</a></li>
+        <li><a href="#examples" class="hover:text-teal-500">Examples</a></li>
+        <li><a href="#" class="hover:text-teal-500">Contact</a></li>
+      </ul>
+      <!-- Mobile Menu Button (simple placeholder) -->
+      <button class="md:hidden focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<!-- ▼ ADD THIS WHOLE BLOCK ▼ -->
+<!-- Tabs wrapper -->
+<div id="glyph-tabs" class="w-full h-full flex flex-col">
+    <!-- Tab labels (scrollable if overflow) -->
+    <div class="flex space-x-2 overflow-x-auto p-2 bg-teal-200">
+      <button data-group="A" class="tab-button px-4 py-2 whitespace-nowrap rounded bg-teal-300 text-teal-800 focus:outline-none">Man &amp; Occupations</button>
+      <button data-group="B" class="tab-button px-4 py-2 whitespace-nowrap rounded bg-teal-300 text-teal-800 focus:outline-none">Woman &amp; Occupations</button>
+      <button data-group="C" class="tab-button px-4 py-2 whitespace-nowrap rounded bg-teal-300 text-teal-800 focus:outline-none">Deities</button>
+      <button data-group="D" class="tab-button px-4 py-2 whitespace-nowrap rounded bg-teal-300 text-teal-800 focus:outline-none">Body Parts</button>
+      <button data-group="L" class="tab-button px-4 py-2 whitespace-nowrap rounded bg-teal-300 text-teal-800 focus:outline-none">Animals</button>
+    </div>
+  
+    <!-- Tab panes -->
+    <div class="flex-1 p-4 overflow-auto">
+      <!-- Group A -->
+      <div data-group="A" class="tab-pane grid gap-4 grid-cols-[repeat(auto-fill,minmax(3rem,1fr))]">
+        <div class="glyph-item">𓀀</div>
+        <div class="glyph-item">𓀁</div>
+        <div class="glyph-item">𓀂</div>
+        <!-- …etc… -->
+      </div>
+      <!-- Group B -->
+      <div data-group="B" class="tab-pane hidden grid gap-4 grid-cols-[repeat(auto-fill,minmax(3rem,1fr))]">
+        <div class="glyph-item">𓁐</div>
+        <div class="glyph-item">𓁑</div>
+        <!-- …etc… -->
+      </div>
+      <!-- Group C -->
+      <div data-group="C" class="tab-pane hidden grid gap-4 grid-cols-[repeat(auto-fill,minmax(3rem,1fr))]">
+        <div class="glyph-item">𓁚</div>
+        <div class="glyph-item">𓁛</div>
+        <!-- …etc… -->
+      </div>
+      <!-- Group D -->
+      <div data-group="D" class="tab-pane hidden grid gap-4 grid-cols-[repeat(auto-fill,minmax(3rem,1fr))]">
+        <div class="glyph-item">𓁶</div>
+        <!-- …etc… -->
+      </div>
+      <!-- Group L -->
+      <div data-group="L" class="tab-pane hidden grid gap-4 grid-cols-[repeat(auto-fill,minmax(3rem,1fr))]">
+        <div class="glyph-item">𓆣</div>
+        <div class="glyph-item flex items-center justify-center text-2xl bg-white rounded shadow cursor-pointer transition-all duration-300 select-none">𓆤</div>
+        <!-- …etc… -->
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    /* hide all panes by default */
+    .tab-pane { display: none; }
+    /* active pane */
+    .tab-pane.active { display: grid; }
+    /* glyph styling & transition */
+    .glyph-item {
+      display: flex ;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: 1px solid black;
+      transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+      width: 3rem; height: 3rem;
+    }
+    .glyph-item.removed {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    /* active tab button */
+    .tab-button.active {
+      background-color: teal;
+      color: white;
+    }
+  </style>
+  
+  <script>
+    // initial setup
+    const tabs = document.querySelectorAll('#glyph-tabs .tab-button');
+    const panes = document.querySelectorAll('#glyph-tabs .tab-pane');
+  
+    function showGroup(name) {
+      // toggle buttons
+      tabs.forEach(btn => btn.classList.toggle('active', btn.dataset.group === name));
+      // toggle panes
+      panes.forEach(p => {
+        p.classList.toggle('active', p.dataset.group === name);
+        p.classList.toggle('hidden', p.dataset.group !== name);
+      });
+    }
+  
+    tabs.forEach(btn =>
+      btn.addEventListener('click', () => showGroup(btn.dataset.group))
+    );
+  
+    // show first group on load
+    showGroup(tabs[0].dataset.group);
+  
+    // copy & remove on glyph click
+    document.querySelectorAll('.glyph-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const txt = item.textContent;
+        navigator.clipboard.writeText(txt);
+        item.classList.add('removed');
+        item.addEventListener('transitionend', () => item.remove());
+      });
+    });
+  </script>
+  <!-- ▲ END OF BLOCK ▲ -->
+  <!-- ────────────────────────────────────────────────────────────────────────── -->
+  
+  
+  
+  
+  
+  <!-- ────────────────────────────────────────────────────────────────────────── -->
+<!-- ▼ ADD GRID & FLEX EXAMPLES ▼ -->
+<section id="grid-examples" class="py-16 px-4 overflow-hidden max-w-screen">
+    <h2 class="text-3xl font-semibold text-center mb-12">Grid Layout Examples</h2>
+    <div class="space-y-12">
+      <!-- 1. Fixed 3 Columns (10 items) -->
+      <div>
+        <h3 class="text-xl font-medium mb-4">1. Fixed 3 Columns (10 items)</h3>
+        <div id="grid1" class="grid grid-cols-3 gap-4"></div>
+      </div>
+      <!-- 2. Responsive auto-fill minmax (20 items) -->
+      <div>
+        <h3 class="text-xl font-medium mb-4">2. Responsive auto-fill minmax (20 items)</h3>
+        <div id="grid2" class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(8rem,1fr))]"></div>
+      </div>
+      <!-- 3. Masonry-style columns (30 items) -->
+      <div>
+        <h3 class="text-xl font-medium mb-4">3. Masonry-style columns (30 items)</h3>
+        <div id="grid3" class="columns-3 gap-4 space-y-4"></div>
+      </div>
+      <!-- 4. Fixed 5 Columns (40 items) -->
+      <div>
+        <h3 class="text-xl font-medium mb-4">4. Fixed 5 Columns (40 items)</h3>
+        <div id="grid4" class="grid grid-cols-5 gap-4"></div>
+      </div>
+      <!-- 5. Nested Grids (50 items) -->
+      <div>
+        <h3 class="text-xl font-medium mb-4">5. Nested Grids (50 items)</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div id="grid5-a" class="grid grid-cols-2 gap-2"></div>
+          <div id="grid5-b" class="grid grid-cols-3 gap-2"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="flex-examples" class="py-16 px-4 bg-gray-50 overflow-hidden max-w-screen">
+    <h2 class="text-3xl font-semibold text-center mb-12">Flexbox Examples</h2>
+    <div class="space-y-12">
+      <!-- 1. Row Layout -->
+      <div>
+        <h3 class="text-xl font-medium mb-4">1. Row Layout</h3>
+        <div id="flex1" class="flex space-x-4 "></div>
+      </div>
+      <!-- 2. Column Layout -->
+      <div>
+        <h3 class="text-xl font-medium mb-4">2. Column Layout</h3>
+        <div id="flex2" class="flex flex-col space-y-4 h-48"></div>
+      </div>
+      <!-- 3. Wrap Layout -->
+      <div>
+        <h3 class="text-xl font-medium mb-4">3. Wrap Layout</h3>
+        <div id="flex3" class="flex flex-wrap gap-4"></div>
+      </div>
+      <!-- 4. Justify Between -->
+      <div>
+        <h3 class="text-xl font-medium mb-4">4. Justify Between</h3>
+        <div id="flex4" class="flex justify-between"></div>
+      </div>
+      <!-- 5. Align Center & Around -->
+      <div>
+        <h3 class="text-xl font-medium mb-4">5. Align Center & Around</h3>
+        <div id="flex5" class="flex justify-around items-center h-48"></div>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    // helper to generate items
+    function genItems(container, count) {
+      for (let i = 1; i <= count; i++) {
+        const div = document.createElement('div');
+        div.className = 'bg-white p-4 border rounded text-center';
+        div.textContent = 'Item ' + i;
+        container.appendChild(div);
+      }
+    }
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      // generate grid items
+      genItems(document.getElementById('grid1'), 10);
+      genItems(document.getElementById('grid2'), 20);
+      genItems(document.getElementById('grid3'), 30);
+      genItems(document.getElementById('grid4'), 40);
+      // nested: first half in grid5-a, rest in grid5-b
+      const half = 25;
+      genItems(document.getElementById('grid5-a'), half);
+      genItems(document.getElementById('grid5-b'), 50 - half);
+  
+      // generate flex items
+      genItems(document.getElementById('flex1'), 10);
+      genItems(document.getElementById('flex2'), 3);
+      genItems(document.getElementById('flex3'), 20);
+      genItems(document.getElementById('flex4'), 5);
+      genItems(document.getElementById('flex5'), 5);
+    });
+  </script>
+  <!-- ▲ END GRID & FLEX EXAMPLES ▲ -->
+  <!-- ────────────────────────────────────────────────────────────────────────── -->
+  
+  
+
+
+  <!-- Hero Section: Flex centering both axes -->
+  <section class="h-screen flex items-center justify-center bg-gradient-to-br from-teal-400 to-teal-600">
+    <div class="text-center px-4">
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">Welcome Mohammad Matin</h1>
+      <p class="text-lg md:text-2xl text-white mb-6">Learn Flexbox & Grid with Tailwind CSS</p>
+      <a href="#features" class="inline-block bg-white text-teal-600 font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-100 transition">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Features Grid: Responsive grid layout -->
+  <section id="features" class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-semibold text-center mb-12">Key Features</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col items-center text-center transition transform hover:-translate-y-2">
+          <div class="text-4xl mb-4">🔥</div>
+          <h3 class="text-xl font-semibold mb-2">Flexbox Essentials</h3>
+          <p class="text-gray-600">Master horizontal and vertical alignment with ease.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col items-center text-center transition transform hover:-translate-y-2">
+          <div class="text-4xl mb-4">📐</div>
+          <h3 class="text-xl font-semibold mb-2">Grid Mastery</h3>
+          <p class="text-gray-600">Create complex, responsive layouts in minutes.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col items-center text-center transition transform hover:-translate-y-2">
+          <div class="text-4xl mb-4">⚙️</div>
+          <h3 class="text-xl font-semibold mb-2">Spacing & Alignment</h3>
+          <p class="text-gray-600">Utilize padding, margin, gap, and space utilities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Centering Examples: Flex centering and Grid centering -->
+  <section id="examples" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-semibold text-center mb-8">Centering Demonstrations</h2>
+      <!-- Horizontal Centering -->
+      <div class="flex justify-center mb-6">
+        <div class="bg-white p-6 rounded-lg shadow">Horizontally Centered</div>
+      </div>
+      <!-- Vertical & Horizontal Centering -->
+      <div class="flex items-center justify-center h-48 mb-6 bg-white rounded-lg shadow">
+        Vertically & Horizontally Centered
+      </div>
+      <!-- Grid Centering -->
+      <div class="grid place-items-center h-48 bg-white rounded-lg shadow">
+        Centered with Grid
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer: Flex & Responsive -->
+  <footer class="bg-white py-8">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-600 mb-4 md:mb-0">&copy; 2025 Tailwind Demo</p>
+      <div class="flex space-x-6">
+        <a href="#" class="hover:text-teal-500">Privacy</a>
+        <a href="#" class="hover:text-teal-500">Terms</a>
+        <a href="#" class="hover:text-teal-500">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

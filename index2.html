@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Responsive Hieroglyph</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #glyph {
+      line-height: 1;
+      font-family: serif;
+      pointer-events: none;
+      user-select: none;
+      transition: font-size 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-teal-300 flex items-center justify-center h-screen w-screen overflow-hidden">
+  <p id="glyph" class="text-teal-900">𓆀</p>
+
+  <script>
+    const glyph = document.getElementById('glyph');
+
+    function resizeGlyph() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const size = Math.min(vw, vh); // pick smaller side
+      glyph.style.fontSize = size + 'px';
+    }
+
+    // Resize initially and on window change
+    resizeGlyph();
+    window.addEventListener('resize', resizeGlyph);
+  </script>
+</body>
+</html>

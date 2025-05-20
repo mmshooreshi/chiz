@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=2.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Starter Project</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Hieroglyph Display</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
 </head>
-<body>
-    <div class="w-screen h-screen m-auto bg-teal-400/40 text-center text-[100px]"> 𓆀 </div>
-
-
-    <script src="script.js"></script>
+<body class="bg-teal-300 flex items-center justify-center min-h-screen overflow-hidden">
+  <div class="w-screen h-screen flex items-center justify-center">
+    <p class="text-[100vw] pt-[20vh] leading-none text-teal-900 font-serif select-none">
+      𓆀
+    </p>
+  </div>
 </body>
 </html>

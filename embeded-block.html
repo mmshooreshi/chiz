@@ -1,0 +1,109 @@
+<!-- ────────────────────────────────────────────────────────────────────────── -->
+<!-- ▼ ADD THIS WHOLE BLOCK ▼ -->
+<!-- Tabs wrapper -->
+<div id="glyph-tabs" class="w-full h-full flex flex-col">
+    <!-- Tab labels (scrollable if overflow) -->
+    <div class="flex space-x-2 overflow-x-auto p-2 bg-teal-200">
+      <button data-group="A" class="tab-button px-4 py-2 whitespace-nowrap rounded bg-teal-300 text-teal-800 focus:outline-none">Man &amp; Occupations</button>
+      <button data-group="B" class="tab-button px-4 py-2 whitespace-nowrap rounded bg-teal-300 text-teal-800 focus:outline-none">Woman &amp; Occupations</button>
+      <button data-group="C" class="tab-button px-4 py-2 whitespace-nowrap rounded bg-teal-300 text-teal-800 focus:outline-none">Deities</button>
+      <button data-group="D" class="tab-button px-4 py-2 whitespace-nowrap rounded bg-teal-300 text-teal-800 focus:outline-none">Body Parts</button>
+      <button data-group="L" class="tab-button px-4 py-2 whitespace-nowrap rounded bg-teal-300 text-teal-800 focus:outline-none">Animals</button>
+    </div>
+  
+    <!-- Tab panes -->
+    <div class="flex-1 p-4 overflow-auto">
+      <!-- Group A -->
+      <div data-group="A" class="tab-pane grid gap-4 grid-cols-[repeat(auto-fill,minmax(3rem,1fr))]">
+        <div class="glyph-item">𓀀</div>
+        <div class="glyph-item">𓀁</div>
+        <div class="glyph-item">𓀂</div>
+        <!-- …etc… -->
+      </div>
+      <!-- Group B -->
+      <div data-group="B" class="tab-pane hidden grid gap-4 grid-cols-[repeat(auto-fill,minmax(3rem,1fr))]">
+        <div class="glyph-item">𓁐</div>
+        <div class="glyph-item">𓁑</div>
+        <!-- …etc… -->
+      </div>
+      <!-- Group C -->
+      <div data-group="C" class="tab-pane hidden grid gap-4 grid-cols-[repeat(auto-fill,minmax(3rem,1fr))]">
+        <div class="glyph-item">𓁚</div>
+        <div class="glyph-item">𓁛</div>
+        <!-- …etc… -->
+      </div>
+      <!-- Group D -->
+      <div data-group="D" class="tab-pane hidden grid gap-4 grid-cols-[repeat(auto-fill,minmax(3rem,1fr))]">
+        <div class="glyph-item">𓁶</div>
+        <!-- …etc… -->
+      </div>
+      <!-- Group L -->
+      <div data-group="L" class="tab-pane hidden grid gap-4 grid-cols-[repeat(auto-fill,minmax(3rem,1fr))]">
+        <div class="glyph-item">𓆣</div>
+        <div class="glyph-item">𓆤</div>
+        <!-- …etc… -->
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    /* hide all panes by default */
+    .tab-pane { display: none; }
+    /* active pane */
+    .tab-pane.active { display: grid; }
+    /* glyph styling & transition */
+    .glyph-item {
+      @apply flex items-center justify-center text-2xl bg-white rounded shadow cursor-pointer transition-all duration-300 select-none;
+      width: 3rem; height: 3rem;
+    }
+    .glyph-item.removed {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    /* active tab button */
+    .tab-button.active {
+      @apply bg-teal-500 text-white;
+    }
+  </style>
+  
+  <script>
+    // initial setup
+    const tabs = document.querySelectorAll('#glyph-tabs .tab-button');
+    const panes = document.querySelectorAll('#glyph-tabs .tab-pane');
+  
+    function showGroup(name) {
+      // toggle buttons
+      tabs.forEach(btn => btn.classList.toggle('active', btn.dataset.group === name));
+      // toggle panes
+      panes.forEach(p => {
+        p.classList.toggle('active', p.dataset.group === name);
+        p.classList.toggle('hidden', p.dataset.group !== name);
+      });
+    }
+  
+    tabs.forEach(btn =>
+      btn.addEventListener('click', () => showGroup(btn.dataset.group))
+    );
+  
+    // show first group on load
+    showGroup(tabs[0].dataset.group);
+  
+    // copy & remove on glyph click
+    document.querySelectorAll('.glyph-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const txt = item.textContent;
+        navigator.clipboard.writeText(txt);
+        item.classList.add('removed');
+        item.addEventListener('transitionend', () => item.remove());
+      });
+    });
+  </script>
+  <!-- ▲ END OF BLOCK ▲ -->
+  <!-- ────────────────────────────────────────────────────────────────────────── -->
+  
+  
+  
+  
+  
+  
+  
